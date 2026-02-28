@@ -1,0 +1,90 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# -----------------------------------------
+# Maven
+# -----------------------------------------
+target/
+!src/main/**/target/
+!src/test/**/target/
+
+# Maven wrapper
+.mvn/
+mvnw
+mvnw.cmd
+
+# -----------------------------------------
+# IntelliJ IDEA
+# -----------------------------------------
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Exclude workspace but allow run configs (optional)
+.idea/workspace.xml
+.idea/tasks.xml
+
+# IntelliJ plugin-generated files
+out/
+.idea_modules/
+
+# -----------------------------------------
+# Logs & Reports
+# -----------------------------------------
+*.log
+logs/
+test-output/
+surefire-reports/
+failsafe-reports/
+
+# -----------------------------------------
+# OS-specific
+# -----------------------------------------
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+
+# -----------------------------------------
+# Environment / Sensitive Files
+# -----------------------------------------
+*.env
+*.properties.local
+*.secret
+*.key
+*.pem
+
+# If you store credentials separately (example)
+# config.properties (ONLY if you want to hide real credentials)
+# configuration.properties
+
+# -----------------------------------------
+# Selenium / Browser Drivers
+# -----------------------------------------
+chromedriver
+chromedriver.exe
+geckodriver
+geckodriver.exe
+msedgedriver
+msedgedriver.exe
+IEDriverServer.exe
+
+# -----------------------------------------
+# Java / Compiler
+# -----------------------------------------
+*.class
+hs_err_pid*
+replay_pid*
+
+# -----------------------------------------
+# Temporary / Cache
+# -----------------------------------------
+tmp/
+temp/
+cache/
