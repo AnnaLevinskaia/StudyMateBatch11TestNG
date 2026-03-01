@@ -61,6 +61,4 @@ public class LoginPage extends BaseUI {
 
         wait.until(ExpectedConditions.visibilityOf(this.errorMessage));
     }
-
-
 }
