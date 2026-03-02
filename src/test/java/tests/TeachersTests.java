@@ -38,7 +38,7 @@ public class TeachersTests extends BaseUI {
         Driver.closeDriver();
     }
 
-    @Test
+    @Test(groups = "smoke")
     void addTeacher() throws InterruptedException {
 
         //clicking on Add teacher button
@@ -74,7 +74,7 @@ public class TeachersTests extends BaseUI {
         Assert.assertTrue(successfullyGeneratedMessage.isDisplayed());
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void editExistingTeacher() throws InterruptedException {
 
         //clicking on Add teacher button

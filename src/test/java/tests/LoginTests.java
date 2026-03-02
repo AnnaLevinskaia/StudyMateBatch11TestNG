@@ -2,6 +2,7 @@ package tests;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import utils.BaseUI;
@@ -13,12 +14,19 @@ public class LoginTests extends BaseUI {
 
     LoginPage loginPage = new LoginPage();
 
+    @BeforeMethod
+    public void setUp() {
+        Driver.getDriver();       // IMPORTANT! Open browser
+        loginPage = new LoginPage();
+    }
+
+
     @AfterMethod
     void tearDown() {
         Driver.closeDriver();
     }
 
-    @Test
+    @Test(groups = "smoke")
     void happyPassLoginTest() throws InterruptedException {
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
@@ -26,7 +34,7 @@ public class LoginTests extends BaseUI {
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("admin"));
     }
 
-    @Test
+    @Test(groups = "regression")
     void sadPassLoginTest() {
         loginPage.loginWithWrongCredentials(
                 ConfigurationReader.getProperty("wrongUserEmail"),
