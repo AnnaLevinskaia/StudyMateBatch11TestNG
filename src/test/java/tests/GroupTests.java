@@ -83,4 +83,27 @@ public class GroupTests extends BaseUI {
 
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("groups"));
     }
+
+    @Test
+    void editGroupDetailsWithoutSaving() throws InterruptedException {
+        loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
+                ConfigurationReader.getProperty("password"));
+
+        jsClick(groupsPage.groupSubMenu);
+        waitAndClick(groupsPage.editBtn);
+        waitUntilVisible(1, groupsPage.groupName);
+
+        String groupNameBefore = groupsPage.groupName.getAttribute("value");
+        clearInputField(groupsPage.groupName);
+        groupsPage.groupName.sendKeys(faker.funnyName().name());
+        groupsPage.cancelBtn.click();
+
+        jsClick(groupsPage.groupSubMenu);
+        waitAndClick(groupsPage.editBtn);
+        waitUntilVisible(1, groupsPage.groupName);
+
+        String groupNameAfter = groupsPage.groupName.getAttribute("value");
+
+        Assert.assertEquals(groupNameBefore, groupNameAfter);
+    }
 }
