@@ -9,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.TeachersPage;
@@ -24,6 +25,7 @@ public class TeachersTests extends BaseUI {
     Faker faker = new Faker();
     TeachersPage teachersPage = new TeachersPage();
     Actions actions = new Actions(Driver.getDriver());
+    SoftAssert softAssert = new SoftAssert();
 
     @BeforeMethod
     void loginTeachersPage() throws InterruptedException {
@@ -67,11 +69,12 @@ public class TeachersTests extends BaseUI {
                 "//td[contains(@class,'MuiTableCell-body') and normalize-space()='" + fullName + "']");
 
         WebElement createdTeacher = waitUntilVisibleByLocator(30, createdTeacherLocator);
-        Assert.assertTrue(createdTeacher.isDisplayed());
+        softAssert.assertTrue(createdTeacher.isDisplayed());
 
         // 2. ASSERT message Instructor successfully saved is there:
         WebElement successfullyGeneratedMessage = Driver.getDriver().findElement(By.xpath("//p[text()='Instructor successfully saved']"));
-        Assert.assertTrue(successfullyGeneratedMessage.isDisplayed());
+        softAssert.assertTrue(successfullyGeneratedMessage.isDisplayed());
+        softAssert.assertAll();
     }
 
     @Test(groups = "smoke")
