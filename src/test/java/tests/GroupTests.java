@@ -11,6 +11,8 @@ import utils.BaseUI;
 import utils.ConfigurationReader;
 import utils.Driver;
 
+import java.nio.file.Paths;
+
 public class GroupTests extends BaseUI {
 
     MainPage mainPage = new MainPage();
@@ -39,7 +41,13 @@ public class GroupTests extends BaseUI {
                 ConfigurationReader.getProperty("password"));
 
         groupsPage.createNewGroup();
-        groupsPage.groupImage.sendKeys("/Users/elenakhokha/Desktop/Studymate/src/test/resources/build.jpg");
+        //groupsPage.groupImage.sendKeys("/Users/elenakhokha/Desktop/Studymate/src/test/resources/build.jpg");
+        String imagePath = Paths.get("src", "test", "resources", "build.jpg")
+                .toAbsolutePath()
+                .toString();
+
+        groupsPage.groupImage.sendKeys(imagePath);
+
         groupsPage.groupName.sendKeys(faker.funnyName().name());
         groupsPage.groupDate.sendKeys(groupsPage.todayDate);
         groupsPage.groupDescription.sendKeys(faker.name().lastName());
