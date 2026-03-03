@@ -9,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.AnnouncementsPage;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.TeachersPage;
@@ -18,6 +19,12 @@ import utils.Driver;
 
 
 public class TeachersTests extends BaseUI {
+
+    // Note for possible Fix? similar to what i had to change for announcement, it was failing when we do driver.quit method
+
+//    LoginPage loginPage;
+//    Faker faker;
+
 
     MainPage mainPage = new MainPage();
     LoginPage loginPage = new LoginPage();
