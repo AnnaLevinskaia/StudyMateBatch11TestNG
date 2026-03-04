@@ -24,13 +24,13 @@ public class AnnouncementTests extends BaseUI{
     Faker faker = new Faker();
     private String randomText;
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     void tearDown() {
 
         Driver.closeDriver();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void announcementDashboard() throws InterruptedException {
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));

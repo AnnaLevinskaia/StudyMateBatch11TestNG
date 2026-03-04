@@ -18,7 +18,6 @@ public class LoginTests extends BaseUI {
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         Driver.getDriver();
-        Driver.getDriver().get("https://codewise.studymate.us/login");
         loginPage = new LoginPage();
     }
 
