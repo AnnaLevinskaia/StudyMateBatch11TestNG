@@ -49,7 +49,7 @@
                 <version>3.2.5</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/smoke-suite.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/smokeTests.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
