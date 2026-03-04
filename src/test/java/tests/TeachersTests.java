@@ -55,12 +55,12 @@ public class TeachersTests extends BaseUI {
 //        waitAndClick(mainPage.teachers);
 //    }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     void tearDown() {
         Driver.closeDriver();
     }
 
-    @Test
+    @Test(groups = "smoke")
     void addTeacher() throws InterruptedException {
 
         //clicking on Add teacher button
@@ -97,7 +97,7 @@ public class TeachersTests extends BaseUI {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(groups = "regression")
     public void editExistingTeacher() throws InterruptedException {
 
         //clicking on Add teacher button

@@ -20,7 +20,7 @@ public class GroupTests extends BaseUI {
     LoginPage loginPage = new LoginPage();
     Faker faker = new Faker();
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     void tearDown() {
         Driver.closeDriver();
     }
