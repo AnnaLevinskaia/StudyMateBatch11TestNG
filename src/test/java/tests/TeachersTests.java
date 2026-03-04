@@ -20,27 +20,47 @@ import utils.Driver;
 
 public class TeachersTests extends BaseUI {
 
-    MainPage mainPage = new MainPage();
-    LoginPage loginPage = new LoginPage();
+    MainPage mainPage;
+    LoginPage loginPage;
+    TeachersPage teachersPage;
+
     Faker faker = new Faker();
-    TeachersPage teachersPage = new TeachersPage();
-    Actions actions = new Actions(Driver.getDriver());
-    SoftAssert softAssert = new SoftAssert();
+    Actions actions;
+    SoftAssert softAssert;
 
-    @BeforeMethod
-    void loginTeachersPage() throws InterruptedException {
-        loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
-                ConfigurationReader.getProperty("password"));
+    @BeforeMethod(alwaysRun = true)
+    public void SetUp() throws InterruptedException {
 
+        Driver.getDriver();              // open fresh driver first
+
+        mainPage = new MainPage();       // now create pages
+        loginPage = new LoginPage();
+        teachersPage = new TeachersPage();
+
+        actions = new Actions(Driver.getDriver());
+        softAssert = new SoftAssert();
+
+        loginPage.loginWithCorrectCredentials(
+                ConfigurationReader.getProperty("username"),
+                ConfigurationReader.getProperty("password")
+        );
         waitAndClick(mainPage.teachers);
     }
+
+//    @BeforeMethod
+//    void loginTeachersPage() throws InterruptedException {
+//        loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
+//                ConfigurationReader.getProperty("password"));
+//
+//        waitAndClick(mainPage.teachers);
+//    }
 
     @AfterMethod
     void tearDown() {
         Driver.closeDriver();
     }
 
-    @Test(groups = "smoke")
+    @Test
     void addTeacher() throws InterruptedException {
 
         //clicking on Add teacher button
@@ -77,7 +97,7 @@ public class TeachersTests extends BaseUI {
         softAssert.assertAll();
     }
 
-    @Test(groups = "smoke")
+    @Test
     public void editExistingTeacher() throws InterruptedException {
 
         //clicking on Add teacher button
