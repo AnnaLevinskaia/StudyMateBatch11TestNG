@@ -13,16 +13,17 @@ import utils.Driver;
 public class LoginTests extends BaseUI {
 
 
-    LoginPage loginPage = new LoginPage();
+    LoginPage loginPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        Driver.getDriver();       // IMPORTANT! Open browser
+        Driver.getDriver();
+        Driver.getDriver().get("https://codewise.studymate.us/login");
         loginPage = new LoginPage();
     }
 
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     void tearDown() {
         Driver.closeDriver();
     }
@@ -31,7 +32,7 @@ public class LoginTests extends BaseUI {
     Login with valid credentials
     */
 
-    @Test(groups = "smoke")
+    @Test (groups = "smoke")
     void happyPassLoginTest() throws InterruptedException {
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
