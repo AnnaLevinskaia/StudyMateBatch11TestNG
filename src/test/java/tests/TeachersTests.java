@@ -98,7 +98,7 @@ public class TeachersTests extends BaseUI {
         softAssert.assertAll();
     }
 
-    @Test(groups = "regression")
+    @Test(groups = "smoke")
     public void editExistingTeacher() throws InterruptedException {
 
         //clicking on Add teacher button

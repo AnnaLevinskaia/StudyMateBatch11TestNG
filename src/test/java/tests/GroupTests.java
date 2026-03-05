@@ -63,7 +63,7 @@ public class GroupTests extends BaseUI {
         groupsPage.groupDescription.sendKeys(faker.name().lastName());
 
         waitAndClick(groupsPage.createBtn);
-        waitUntilVisible(2, groupsPage.successAlert);
+        waitUntilVisible(4, groupsPage.successAlert);
 
         Assert.assertTrue(groupsPage.successAlert.isDisplayed());
     }
@@ -80,7 +80,7 @@ public class GroupTests extends BaseUI {
 
         jsClick(groupsPage.groupSubMenu);
         waitAndClick(groupsPage.editBtn);
-        waitUntilVisible(1, groupsPage.groupName);
+        waitUntilVisible(3, groupsPage.groupName);
 
         String groupNameBefore = groupsPage.groupName.getAttribute("value");
         clearInputField(groupsPage.groupName);
