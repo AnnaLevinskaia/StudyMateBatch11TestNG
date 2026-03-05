@@ -8,6 +8,7 @@
             <class name="tests.AnnouncementTests"></class>
             <class name="tests.LoginTests"></class>
             <class name="tests.TeachersTests"></class>
+            <class name="tests.GroupTests"></class>
         </classes>
     </test>
 
