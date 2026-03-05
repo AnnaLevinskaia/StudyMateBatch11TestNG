@@ -13,14 +13,15 @@ import java.util.Map;
 
 public class Driver {
 
-    static WebDriver driver;
+    private static final ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
 
         String browser = ConfigurationReader.getProperty("browser");
 
-        if (driver != null) {
-            return driver;
+        WebDriver driver;
+        if (driverPool.get() != null) {
+            return driverPool.get();
         }
 
         // Handle browser with Chrome options
@@ -64,13 +65,15 @@ public class Driver {
         //this waits for page to fully loaded
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 
-        return driver;
+        driverPool.set(driver);
+        return driverPool.get();
     }
 
     public static void closeDriver() {
+        WebDriver driver = driverPool.get();
         if (driver != null) {
             driver.quit();
-            driver = null;
+            driverPool.remove();
         }
     }
 }

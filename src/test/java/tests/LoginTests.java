@@ -31,7 +31,7 @@ public class LoginTests extends BaseUI {
     Login with valid credentials
     */
 
-    @Test (groups = "smoke")
+    @Test(groups = "smoke")
     void happyPassLoginTest() throws InterruptedException {
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));

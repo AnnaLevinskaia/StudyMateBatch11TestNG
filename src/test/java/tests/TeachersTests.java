@@ -83,6 +83,7 @@ public class TeachersTests extends BaseUI {
         teachersPage.SDETdropDownOption.sendKeys(Keys.ESCAPE);
 
         teachersPage.addButton.click();
+        Thread.sleep(2000);
 
         // 1. ASSERT that full name appears in the table:
         By createdTeacherLocator = By.xpath(
