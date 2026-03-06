@@ -8,34 +8,61 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.CoursesPage;
-import pages.LoginPage;
-import pages.MainPage;
+import org.testng.asserts.SoftAssert;
+import pages.*;
 import utils.BaseUI;
 import utils.ConfigurationReader;
 import utils.Driver;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.time.Duration;
-
-
 public class CoursesTests extends BaseUI{
-    LoginPage loginPage = new LoginPage();
-    CoursesPage coursesPage =new CoursesPage();
-    Faker faker = new Faker();
-    MainPage mainPage = new MainPage();
+    LoginPage loginPage;
+    CoursesPage coursesPage;
+    Faker faker ;
+    MainPage mainPage;
+
+    @BeforeMethod(alwaysRun = true)
+    public void setup() throws InterruptedException {
+
+        // Start driver first
+        Driver.getDriver();
+
+        // Initialize page objects AFTER driver starts
+        loginPage = new LoginPage();
+        faker = new Faker();
+        mainPage = new MainPage();
+
+        // Login
+        loginPage.loginWithCorrectCredentials(
+                ConfigurationReader.getProperty("username"),
+                ConfigurationReader.getProperty("password")
+        );
+
+        // Navigate to Announcements page
+        waitAndClick(mainPage.courses);
+
+    }
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() {
+        Driver.closeDriver();
+    }
+
 
     @Test
     public void createNewCourse() throws InterruptedException {
-        loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
-                ConfigurationReader.getProperty("password"));
-        waitAndClick(mainPage.courses);
+        mainPage = new MainPage();
+       coursesPage = new CoursesPage();
+        loginPage = new LoginPage();
+        faker = new Faker();
 
         waitAndClick(coursesPage.createCourseBtn);
-        coursesPage.uploadThePhoto.sendKeys("/Users/nargizasulaimankulova/Desktop/StudyMateBatch11TestNG/src/test/resources/download.jpeg");
-        coursesPage.courseNameInput.sendKeys(faker.funnyName().name());
+        //coursesPage.uploadThePhoto.sendKeys("/Users/nargizasulaimankulova/Desktop/StudyMateBatch11TestNG/src/test/resources/download.jpeg");
+        coursesPage.courseNameInput.sendKeys(faker.lorem().sentence(5));
         coursesPage.dateInput.sendKeys(coursesPage.currentDate);
         coursesPage.description.sendKeys(faker.lorem().sentence());
         waitAndClick(coursesPage.createBtn);
@@ -47,9 +74,10 @@ public class CoursesTests extends BaseUI{
 
     @Test (groups = "smoke")
     public void editCourseDetails() throws InterruptedException {
-        loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
-                ConfigurationReader.getProperty("password"));
-        waitAndClick(mainPage.courses);
+        mainPage = new MainPage();
+        coursesPage = new CoursesPage();
+        loginPage = new LoginPage();
+        faker = new Faker();
 
         waitAndClick(coursesPage.editSign);
         coursesPage.edit.click();
@@ -66,9 +94,11 @@ public class CoursesTests extends BaseUI{
     }
     @Test
     public void assignTeacher() throws InterruptedException {
-        loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
-                ConfigurationReader.getProperty("password"));
-        waitAndClick(mainPage.courses);
+
+        mainPage = new MainPage();
+        coursesPage = new CoursesPage();
+        loginPage = new LoginPage();
+
         WebDriver driver = Driver.getDriver();
 
         waitAndClick(coursesPage.editSign);
@@ -93,9 +123,10 @@ public class CoursesTests extends BaseUI{
 
     @Test (groups = "smoke")
     public void deleteCourse() throws InterruptedException {
-        loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
-                ConfigurationReader.getProperty("password"));
-        waitAndClick(mainPage.courses);
+        mainPage = new MainPage();
+        coursesPage = new CoursesPage();
+        loginPage = new LoginPage();
+
         waitAndClick(coursesPage.editSign);
         waitAndClick(coursesPage.delete);
         coursesPage.deleteBtn.click();
