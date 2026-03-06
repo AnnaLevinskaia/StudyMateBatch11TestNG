@@ -13,15 +13,18 @@ import java.util.Map;
 
 public class Driver {
 
-    static WebDriver driver;
+    private static final ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
 
         String browser = ConfigurationReader.getProperty("browser");
+        boolean headless = Boolean.parseBoolean(ConfigurationReader.getProperty("headless"));
 
-        if (driver != null) {
-            return driver;
+        if (driverPool.get() != null) {
+            return driverPool.get();
         }
+
+        WebDriver driver;
 
         // Handle browser with Chrome options
         ChromeOptions options = new ChromeOptions();
@@ -39,7 +42,15 @@ public class Driver {
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-infobars");
         options.addArguments("--disable-extensions");
-        //
+
+        if (headless) {
+            options.addArguments("--headless=new");
+            options.addArguments("--window-size=1920,1080");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-features=PaintHolding");
+        }
 
         switch (browser) {
             case "chrome":
@@ -59,18 +70,23 @@ public class Driver {
                         ("please provide the browser name from following options: chrome, firefox, safari, edge");
         }
 
-        driver.manage().window().maximize();
+        // Don't maximize in headless
+        if (!headless) {
+            driver.manage().window().maximize();
+        }
 
         //this waits for page to fully loaded
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 
-        return driver;
+        driverPool.set(driver);
+        return driverPool.get();
     }
 
     public static void closeDriver() {
+        WebDriver driver = driverPool.get();
         if (driver != null) {
             driver.quit();
-            driver = null;
+            driverPool.remove();
         }
     }
 }

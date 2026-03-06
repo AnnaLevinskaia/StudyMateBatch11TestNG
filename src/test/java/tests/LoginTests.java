@@ -31,7 +31,7 @@ public class LoginTests extends BaseUI {
     Login with valid credentials
     */
 
-    @Test (groups = "smoke")
+    @Test(groups = "smoke")
     void happyPassLoginTest() throws InterruptedException {
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
@@ -43,7 +43,6 @@ public class LoginTests extends BaseUI {
     Login with invalid credentials
     */
 
-
     @DataProvider(name = "invalidLogins")
     public Object[][] invalidLogins() {
         return new Object[][]{
@@ -52,7 +51,7 @@ public class LoginTests extends BaseUI {
         };
     }
 
-    @Test(dataProvider = "invalidLogins", groups = "regression")
+    @Test(dataProvider = "invalidLogins")
     public void failedLoginTest(String email, String password) {
         loginPage.loginWithWrongCredentials(email, password);
         Assert.assertTrue(loginPage.errorMessage.isDisplayed());

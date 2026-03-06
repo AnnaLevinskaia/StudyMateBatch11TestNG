@@ -15,9 +15,9 @@ import java.nio.file.Paths;
 
 public class GroupTests extends BaseUI {
 
-    MainPage mainPage = new MainPage();
-    GroupsPage groupsPage = new GroupsPage();
-    LoginPage loginPage = new LoginPage();
+    MainPage mainPage;
+    GroupsPage groupsPage;
+    LoginPage loginPage;
     Faker faker = new Faker();
 
     @AfterMethod(alwaysRun = true)
@@ -25,8 +25,13 @@ public class GroupTests extends BaseUI {
         Driver.closeDriver();
     }
 
-    @Test
+    @Test(groups = {"smoke", "regression"})
     void openGroupPage() throws InterruptedException {
+
+        mainPage = new MainPage();
+        groupsPage = new GroupsPage();
+        loginPage = new LoginPage();
+
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
 
@@ -35,8 +40,13 @@ public class GroupTests extends BaseUI {
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("groups"));
     }
 
-    @Test
+    @Test(groups = "smoke")
     void createGroupWithValidData() throws InterruptedException {
+
+        mainPage = new MainPage();
+        groupsPage = new GroupsPage();
+        loginPage = new LoginPage();
+
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
 
@@ -53,19 +63,24 @@ public class GroupTests extends BaseUI {
         groupsPage.groupDescription.sendKeys(faker.name().lastName());
 
         waitAndClick(groupsPage.createBtn);
-        waitUntilVisible(2, groupsPage.successAlert);
+        waitUntilVisible(4, groupsPage.successAlert);
 
         Assert.assertTrue(groupsPage.successAlert.isDisplayed());
     }
 
     @Test
     void editGroupDetails() throws InterruptedException {
+
+        mainPage = new MainPage();
+        groupsPage = new GroupsPage();
+        loginPage = new LoginPage();
+
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
 
         jsClick(groupsPage.groupSubMenu);
         waitAndClick(groupsPage.editBtn);
-        waitUntilVisible(1, groupsPage.groupName);
+        waitUntilVisible(3, groupsPage.groupName);
 
         String groupNameBefore = groupsPage.groupName.getAttribute("value");
         clearInputField(groupsPage.groupName);
@@ -83,6 +98,11 @@ public class GroupTests extends BaseUI {
 
     @Test
     void deleteRandomGroupTest() throws InterruptedException {
+
+        mainPage = new MainPage();
+        groupsPage = new GroupsPage();
+        loginPage = new LoginPage();
+
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
 
@@ -94,6 +114,11 @@ public class GroupTests extends BaseUI {
 
     @Test
     void editGroupDetailsWithoutSaving() throws InterruptedException {
+
+        mainPage = new MainPage();
+        groupsPage = new GroupsPage();
+        loginPage = new LoginPage();
+
         loginPage.loginWithCorrectCredentials(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
 

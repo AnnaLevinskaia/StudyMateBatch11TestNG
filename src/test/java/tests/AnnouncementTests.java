@@ -24,7 +24,7 @@ public class AnnouncementTests extends BaseUI {
     Faker faker;
     String randomText;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() throws InterruptedException {
 
         // Start driver first
@@ -50,12 +50,12 @@ public class AnnouncementTests extends BaseUI {
         );
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         Driver.closeDriver();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void addNewAnnouncement() {
 
         waitAndClick(announcementsPage.addNewAnnouncementTab);
@@ -96,7 +96,7 @@ public class AnnouncementTests extends BaseUI {
         );
     }
 
-    @Test
+    @Test (groups = "smoke")
     public void addAndDeleteSameAnnouncement() {
 
         waitAndClick(announcementsPage.addNewAnnouncementTab);
