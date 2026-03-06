@@ -1,10 +1,10 @@
 package tests;
 
 import com.github.javafaker.Faker;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.StudentsPage;
@@ -19,24 +19,22 @@ public class StudentTests extends BaseUI {
     StudentsPage studentsPage;
     Faker faker;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeMethod
+    public void setUp() {
         Driver.getDriver().get(ConfigurationReader.getProperty("url"));
         loginPage = new LoginPage();
         mainPage = new MainPage();
         studentsPage = new StudentsPage();
         faker = new Faker();
-
-
     }
 
-    @AfterEach
-    void tearDown() {
+    @AfterMethod
+    public void tearDown() {
         Driver.closeDriver();
     }
 
-    @Test
-    void addStudentTest() throws InterruptedException {
+    @Test(groups = {"smoke"})
+    public void addStudentTest() throws InterruptedException {
         loginPage.loginWithCorrectCredentials(
                 ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password")
@@ -53,8 +51,24 @@ public class StudentTests extends BaseUI {
         studentsPage.fillStudentForm(first, last, email, phone);
         studentsPage.submit();
 
-        Assertions.assertTrue(studentsPage.isSuccessVisible(), "Success alert was NOT displayed!");
+        Assert.assertTrue(studentsPage.isSuccessVisible(), "Success alert was NOT displayed!");
     }
-}
+
+        @Test(groups = {"smoke"})
+        public void addStudentNegativeTest_requiredFields () throws InterruptedException {
+
+            loginPage.loginWithCorrectCredentials(
+                    ConfigurationReader.getProperty("username"),
+                    ConfigurationReader.getProperty("password")
+            );
+
+
+            waitAndClick(mainPage.students);
+            studentsPage.clickAddStudent();
+
+            // leave fields empty → button should be disabled
+            Assert.assertTrue(studentsPage.isAddButtonDisabled(), "Add button should be disabled when fields are empty");
+        }
+    }
 
 
