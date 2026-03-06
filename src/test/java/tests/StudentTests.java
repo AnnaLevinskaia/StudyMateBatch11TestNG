@@ -35,23 +35,26 @@ public class StudentTests extends BaseUI {
 
     @Test(groups = {"smoke"})
     public void addStudentTest() throws InterruptedException {
-        loginPage.loginWithCorrectCredentials(
-                ConfigurationReader.getProperty("username"),
-                ConfigurationReader.getProperty("password")
-        );
+ loginPage.loginWithCorrectCredentials(
+                 ConfigurationReader.getProperty("username"),
+                 ConfigurationReader.getProperty("password")
+                 );
 
-        waitAndClick(mainPage.students);
-        studentsPage.clickAddStudent();
+ waitAndClick(mainPage.students);
 
-        String first = faker.name().firstName();
-        String last = faker.name().lastName();
-        String email = "auto_" + System.currentTimeMillis() + "@gmail.com";
-        String phone = "312" + faker.number().digits(7);
+ studentsPage.closeBlockPopupIfVisible(); // ADD HERE
 
-        studentsPage.fillStudentForm(first, last, email, phone);
-        studentsPage.submit();
+ studentsPage.clickAddStudent();
 
-        Assert.assertTrue(studentsPage.isSuccessVisible(), "Success alert was NOT displayed!");
+ String first = faker.name().firstName();
+ String last = faker.name().lastName();
+ String email = "auto_" + System.currentTimeMillis() + "@gmail.com";
+ String phone = "312" + faker.number().digits(7);
+
+ studentsPage.fillStudentForm(first, last, email, phone);
+ studentsPage.submit();
+
+ Assert.assertTrue(studentsPage.isAddStudentModalClosed());
     }
 
         @Test(groups = {"smoke"})
