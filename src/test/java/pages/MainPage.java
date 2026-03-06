@@ -37,4 +37,7 @@ public class MainPage {
     @FindBy(xpath = "//li[text()='Announcements']")
     public WebElement announcements;
 
+    @FindBy(xpath = "//li[text()='Students']")
+    public WebElement students;
+
 }
